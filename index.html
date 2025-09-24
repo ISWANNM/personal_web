@@ -1,37 +1,54 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Identitas Diri</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Profile</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">MyProfile</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="intro">
+            <h2>Hi Welcome to my Profile</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Sed tristique purus orci libero egestas ut. Augue suspendisse
+                blandit lorem massa ipsum, egestas mi. Id id fusce est lorem
+                id tincidunt eget euismod.
+            </p>
+            <button class="contact-btn">Contact</button>
+            <div class="download">
+                <p>download CV <i class="fa-solid fa-download"></i></p>
+            </div>
 
-    <h1>Identitas Diri</h1>
+            <div class="social-icons">
+                <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            </div>
+        </div>
 
-    <img src="iswan.jpg" alt="Iswannm" width="150">
-
-    <h2>Data Pribadi</h2>
-    <p>Nama: Iswan Nurul Muttaqin</p>
-    <p>Umur: 24 Tahun</p>
-    <p>Alamat: Garut, Jawa Barat</p>
-    <p>Status: Mahasiswa</p>
-
-    <h2>Tentang Saya</h2>
-    <p>Saya adalah lulusan mahasiswa jurusan Teknik Informatika yang tertarik dengan Fullstack Developer.</p>
-
-    <h2>Keahlian</h2>
-    <ul>
-        <li>HTML</li>
-        <li>CSS</li>
-        <li>JavaScript</li>
-    </ul>
-
-    <h2>Kontak</h2>
-    <p>Email: <a href="iswannurul.m@gmail.com">iswannurul.m@gmail.com</a></p>
-    <p>GitHub: <a href="https://github.com/ISWANNM">github.com/ISWANNM</a></p>
-
+        <div class="card">
+            <img src="iswan.jpg" alt="Profile">
+            <div class="card-info">
+                <h3>Iswan Nurul Muttaqin</h3>
+                <p>Fullstack Developer</p>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
