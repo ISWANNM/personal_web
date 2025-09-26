@@ -1,4 +1,3 @@
-// scripts/index.js
 
 const projects = [
     {
@@ -31,7 +30,7 @@ function renderProjects() {
             <h5 class="card-title">
               <a href="detail-project.html" class="text-decoration-none">${project.title}</a>
             </h5>
-            <p class="card-text small">${project.description.substring(0, 70)}</p>
+            <p class="card-text small">${project.description.substring(0, 70)}</p>  
           </div>
           <div class="card-footer">
             <small class="text-muted">Duration: ${project.duration}</small>
