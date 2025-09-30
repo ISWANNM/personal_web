@@ -1,46 +1,56 @@
+function toBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+}
 
-const projects = [
-    {
-        title: "Web Portfolio",
-        description: "Website portfolio menggunakan HTML, CSS, dan JavaScript.",
-        image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
-        technologies: ["React.js", "Node.js"],
-        duration: "1 Month"
-    },
-    {
-        title: "E-commerce App",
-        description: "Aplikasi toko online dengan fitur cart dan checkout.",
-        image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
-        technologies: ["Next.js", "TypeScript"],
-        duration: "2 Months"
-    }
-];
+document.getElementById("projectForm").addEventListener("submit", async function (event) {
+  event.preventDefault();
+
+  let projects = JSON.parse(localStorage.getItem("projects")) || [];
+
+  const file = document.getElementById("uploadImage").files[0];
+  const imageBase64 = file ? await toBase64(file) : "";
+
+  const project = {
+    title: document.getElementById("projectName").value,
+    startDate: document.getElementById("startDate").value,
+    endDate: document.getElementById("endDate").value,
+    description: document.getElementById("description").value,
+    technologies: Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(el => el.value),
+    image: imageBase64
+  };
+
+  projects.push(project);
+  localStorage.setItem("projects", JSON.stringify(projects));
+
+  renderProjects();
+  document.getElementById("projectForm").reset();
+});
 
 
 function renderProjects() {
-    const projectList = document.getElementById("project-list");
-    projectList.innerHTML = "";
+  let projects = JSON.parse(localStorage.getItem("projects")) || [];
+  const projectList = document.getElementById("project-list");
+  projectList.innerHTML = "";
 
-    projects.forEach((project, index) => {
-        projectList.innerHTML += `
+  projects.forEach((project, index) => {
+    projectList.innerHTML += `
       <div class="col-md-4 mb-4">
-        <div class="card h-100 shadow-sm">
+        <div class="card shadow-sm h-100">
           <img src="${project.image}" class="card-img-top" alt="${project.title}">
           <div class="card-body">
-            <h5 class="card-title">
-              <a href="detail-project.html" class="text-decoration-none">${project.title}</a>
-            </h5>
-            <p class="card-text small">${project.description.substring(0, 70)}</p>  
-          </div>
-          <div class="card-footer">
-            <small class="text-muted">Duration: ${project.duration}</small>
-            <br>
-            <small class="text-muted">Tech: ${project.technologies.join(", ")}</small>
+            <h5><a href="detail-project.html?id=${index}" class="text-decoration-none">${project.title}</a></h5>
+            <p class="card-text">${project.description.substring(0, 60)}...</p>
+            <p><strong>Tech:</strong> ${project.technologies.join(", ")}</p>
           </div>
         </div>
       </div>
     `;
-    });
+  });
 }
 
-renderProjects();
+document.addEventListener("DOMContentLoaded", renderProjects);
