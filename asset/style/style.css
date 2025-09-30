@@ -181,3 +181,8 @@ body {
     padding-bottom: 5px;
 }
 
+.detail-container{
+    max-width: 1000px;
+    margin: 50% auto;
+    text-align: center;
+}
