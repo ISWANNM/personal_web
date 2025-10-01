@@ -75,12 +75,26 @@
     
     <div class="project-container mt-5">
         <h2 class="section-title text-center">My Project</h2>
+        <div class="text-center mb-4">
+        <label for="filterTech" class="form-label">Filter by Technology:</label>
+        <select id="filterTech" class="form-select w-auto d-inline-block">
+            <option value="all">All</option>
+            <option value="Node.js">Node.js</option>
+            <option value="React.js">React.js</option>
+            <option value="Next.js">Next.js</option>
+            <option value="TypeScript">TypeScript</option>
+        </select>
+        </div>
+
         <div class="row" id="project-list">
             
         </div>
-    </div>
+    </div>  
 
     <script src="asset/scripts/index.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", renderProjects);
+    </script>
 </body>
 
 </html>

@@ -1,3 +1,4 @@
+// Convert file ke Base64
 function toBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -7,6 +8,7 @@ function toBase64(file) {
   });
 }
 
+// Submit form
 document.getElementById("projectForm").addEventListener("submit", async function (event) {
   event.preventDefault();
 
@@ -31,26 +33,61 @@ document.getElementById("projectForm").addEventListener("submit", async function
   document.getElementById("projectForm").reset();
 });
 
+// Render project list
+function renderProjects(filter = "all") {
+  let allProjects = JSON.parse(localStorage.getItem("projects")) || [];
 
-function renderProjects() {
-  let projects = JSON.parse(localStorage.getItem("projects")) || [];
+  // Simpan index
+  let projects = allProjects.map((p, i) => ({ ...p, originalIndex: i }));
+
+  // Filter 
+  if (filter && filter !== "all") {
+    projects = projects.filter(p => p.technologies.includes(filter));
+  }
+
+  // Sort by title 
+  projects = projects.sort((a, b) => a.title.localeCompare(b.title));
+
   const projectList = document.getElementById("project-list");
   projectList.innerHTML = "";
 
-  projects.forEach((project, index) => {
-    projectList.innerHTML += `
-      <div class="col-md-4 mb-4">
-        <div class="card shadow-sm h-100">
-          <img src="${project.image}" class="card-img-top" alt="${project.title}">
-          <div class="card-body">
-            <h5><a href="detail-project.html?id=${index}" class="text-decoration-none">${project.title}</a></h5>
-            <p class="card-text">${project.description.substring(0, 60)}...</p>
-            <p><strong>Tech:</strong> ${project.technologies.join(", ")}</p>
-          </div>
+  if (projects.length === 0) {
+    projectList.innerHTML = `<p class="text-center text-muted">No projects found</p>`;
+    return;
+  }
+
+  // Render 
+  projectList.innerHTML = projects.map(project => `
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-sm h-100">
+        <img src="${project.image}" class="card-img-top" alt="${project.title}">
+        <div class="card-body">
+          <h5>
+            <a href="detail-project.html?id=${project.originalIndex}" class="text-decoration-none">
+              ${project.title}
+            </a>
+          </h5>
+          <p class="card-text">${project.description.substring(0, 60)}...</p>
+          <p><strong>Tech:</strong> ${project.technologies.join(", ")}</p>
         </div>
       </div>
-    `;
-  });
+    </div>
+  `).join("");
+
+  // Reduce 
+  const techCount = allProjects.reduce((acc, p) => {
+    p.technologies.forEach(t => acc[t] = (acc[t] || 0) + 1);
+    return acc;
+  }, {});
+
+  console.log("Jumlah project per teknologi:", techCount);
 }
 
-document.addEventListener("DOMContentLoaded", renderProjects);
+// Event filter
+document.getElementById("filterTech").addEventListener("change", function () {
+  const val = this.value || "all"; // fallback kalau kosong
+  renderProjects(val);
+});
+
+// Render awal
+document.addEventListener("DOMContentLoaded", () => renderProjects());
